@@ -194,19 +194,6 @@ export function ContactForm() {
           </motion.div>
         )}
       </form>
-
-      {/* Alternative Contact */}
-      <div className="mt-6 pt-6 border-t-2 border-gray-200">
-        <p className="text-sm text-gray-600 text-center mb-3">
-          Or email me directly at:
-        </p>
-        <a
-          href={`mailto:${siteContent?.email ?? ''}`}
-          className="block text-center text-rose-600 font-semibold hover:text-rose-700 transition-colors"
-        >
-          {siteContent?.email ?? ''}
-        </a>
-      </div>
     </motion.div>
   )
 }

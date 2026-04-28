@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Instagram, Mail } from 'lucide-react'
+import { Instagram } from 'lucide-react'
 import { siteContent } from '@/lib/content'
 
 export function Footer() {
@@ -26,13 +26,6 @@ export function Footer() {
                 aria-label="Instagram"
               >
                 <Instagram size={24} />
-              </a>
-              <a
-                href={`mailto:${siteContent?.email ?? ''}`}
-                className="text-gray-400 hover:text-rose-400 transition-colors"
-                aria-label="Email"
-              >
-                <Mail size={24} />
               </a>
             </div>
           </div>
@@ -67,9 +60,6 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h4 className="font-semibold text-lg mb-4">Get In Touch</h4>
-            <p className="text-gray-400 mb-2">
-              Email: <a href={`mailto:${siteContent?.email ?? ''}`} className="hover:text-rose-400 transition-colors">{siteContent?.email ?? ''}</a>
-            </p>
             <p className="text-gray-400">
               Instagram: <a href={siteContent?.instagramUrl ?? '#'} target="_blank" rel="noopener noreferrer" className="hover:text-rose-400 transition-colors">{siteContent?.instagram ?? ''}</a>
             </p>
