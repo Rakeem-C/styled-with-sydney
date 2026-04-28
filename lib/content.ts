@@ -1,14 +1,29 @@
 export const siteContent = {
-  name: "Sidney Kiyabu",
-  tagline: "Transforming Hair, Elevating Confidence",
+  name: "Styled by Sidney",
+  ownerName: "Sidney Kiyabu",
+  tagline: "Elevated hair for weddings, events, and confidence-first transformations",
   email: "seniordev56@gmail.com",
   instagram: "@styledbysidneyx",
   instagramUrl: "https://www.instagram.com/styledbysidneyx/",
+  personalInstagramUrl: "https://www.instagram.com/sidneyanelax/",
+  hero: {
+    eyebrow: "Bridal hair, color, styling, and glam",
+    headline: "Styled by Sidney",
+    description: "A polished, personal hair experience for clients who want to feel taken care of from the first message to the final look.",
+    primaryCta: "Request a consultation",
+    secondaryCta: "View recent work",
+    proofPoints: [
+      "Bridal and event styling",
+      "Color, extensions, and glam",
+      "Detail-led, photo-ready finishes"
+    ]
+  },
   
   bio: {
     title: "About Sidney",
-    subtitle: "Your Hair Transformation Expert",
-    description: "With a passion for beauty and an eye for detail, I specialize in creating stunning hair transformations that make you feel confident and beautiful. From bridal styling to color transformations, I'm dedicated to bringing your hair vision to life.",
+    subtitle: "A calm, detail-driven stylist for big days and everyday confidence",
+    description: "Sidney brings a steady hand, a creative eye, and a client-first approach to every appointment. Her work is rooted in listening closely, understanding the look you want, and shaping a style that feels polished, wearable, and true to you.",
+    extendedDescription: "Whether the moment is a wedding morning, a photoshoot, a special event, or a long-awaited transformation, Sidney focuses on the details that make hair feel intentional: shape, softness, balance, hold, and finish. The goal is simple: you leave feeling beautiful, comfortable, and confident in front of the mirror and the camera.",
     expertise: [
       "Bridal Hair Styling",
       "Hair Extensions",
@@ -18,6 +33,29 @@ export const siteContent = {
     ],
     image: "/sidney-bio.png"
   },
+
+  clientExperience: [
+    {
+      title: "A thoughtful consultation",
+      description: "Sidney starts with your event, inspiration, hair history, and comfort level so the final look fits the real day, not just the reference photo."
+    },
+    {
+      title: "Photo-ready finishing",
+      description: "Styles are shaped with movement, softness, and hold in mind, so the hair looks beautiful in person and photographs well."
+    },
+    {
+      title: "Clear next steps",
+      description: "Clients know what to expect before the appointment, how to prep, and how Sidney will follow up after an inquiry."
+    }
+  ],
+
+  trustSignals: [
+    "Bridal styling",
+    "Color transformations",
+    "Extensions",
+    "Makeup artistry",
+    "Braids and event looks"
+  ],
   
   services: [
     {

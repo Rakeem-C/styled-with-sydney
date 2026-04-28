@@ -2,13 +2,13 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Calendar, Instagram, ArrowRight } from 'lucide-react'
+import { ArrowRight, Camera, Calendar, Sparkles } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { siteContent } from '@/lib/content'
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden">
       {/* Background Image with Parallax Effect */}
       <div className="absolute inset-0 z-0">
         <div className="relative w-full h-full bg-gray-900">
@@ -39,8 +39,11 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6"
           >
+            <p className="mb-5 text-sm md:text-base font-semibold uppercase tracking-[0.18em] text-rose-200">
+              {siteContent?.hero?.eyebrow ?? ''}
+            </p>
             <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6">
-              {siteContent?.name ?? 'Sidney Kiyabu'}
+              {siteContent?.hero?.headline ?? siteContent?.name ?? 'Styled by Sidney'}
             </h1>
             <p className="text-2xl md:text-3xl text-rose-300 font-light mb-8">
               {siteContent?.tagline ?? 'Transforming Hair, Elevating Confidence'}
@@ -53,7 +56,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-xl text-white/90 mb-12 max-w-2xl mx-auto"
           >
-            Specializing in bridal styling, extensions, makeup artistry, color transformations, and creative braiding
+            {siteContent?.hero?.description ?? ''}
           </motion.p>
 
           <motion.div
@@ -67,19 +70,34 @@ export function Hero() {
               className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-700 transition-all duration-300 shadow-2xl hover:shadow-rose-500/50 transform hover:-translate-y-1 hover:scale-105"
             >
               <Calendar className="mr-2" size={20} />
-              Contact for Consultation
+              {siteContent?.hero?.primaryCta ?? 'Request a consultation'}
               <ArrowRight className="ml-2" size={20} />
             </Link>
             
-            <a
-              href={siteContent?.instagramUrl ?? '#'}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/gallery"
               className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full hover:bg-white/20 transition-all duration-300 border-2 border-white/30 hover:border-white/50"
             >
-              <Instagram className="mr-2" size={20} />
-              Follow on Instagram
-            </a>
+              <Camera className="mr-2" size={20} />
+              {siteContent?.hero?.secondaryCta ?? 'View recent work'}
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="mt-10 flex flex-wrap justify-center gap-3"
+          >
+            {siteContent?.hero?.proofPoints?.map?.((point) => (
+              <span
+                key={point}
+                className="inline-flex items-center rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm"
+              >
+                <Sparkles className="mr-2 text-rose-200" size={15} />
+                {point}
+              </span>
+            )) ?? null}
           </motion.div>
         </motion.div>
       </div>

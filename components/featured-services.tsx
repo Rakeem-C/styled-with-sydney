@@ -30,10 +30,10 @@ export function FeaturedServices() {
           className="text-center mb-16"
         >
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Signature Services
+            Signature services for your best hair moments
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Expert hair services tailored to bring your vision to life
+            From wedding mornings to color refreshes, Sidney helps clients choose the look, finish, and prep that fit the occasion.
           </p>
         </motion.div>
 

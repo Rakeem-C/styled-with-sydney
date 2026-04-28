@@ -17,13 +17,13 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://styled-with-sydney.vercel.app'),
-  title: 'Sidney Kiyabu - Professional Hairstylist | Bridal, Color, Extensions',
-  description: 'Transform your hair with Sidney Kiyabu. Specializing in bridal styling, hair extensions, makeup artistry, color services, and braiding. Book your consultation today.',
-  keywords: ['hairstylist', 'bridal hair', 'hair extensions', 'makeup artist', 'color specialist', 'braids', 'Sidney Kiyabu'],
+  title: 'Styled by Sidney | Bridal Hair, Color, Extensions, and Event Styling',
+  description: 'Book a consultation with Styled by Sidney for bridal hair, event styling, color transformations, extensions, makeup artistry, and polished photo-ready finishes.',
+  keywords: ['Styled by Sidney', 'Sidney Kiyabu', 'bridal hair', 'hair extensions', 'makeup artist', 'color specialist', 'event hairstylist'],
   authors: [{ name: 'Sidney Kiyabu' }],
   openGraph: {
-    title: 'Sidney Kiyabu - Professional Hairstylist',
-    description: 'Transforming Hair, Elevating Confidence. Specializing in bridal styling, extensions, makeup, and color.',
+    title: 'Styled by Sidney - Bridal Hair, Color, Extensions, and Event Styling',
+    description: 'Elevated hair for weddings, events, and confidence-first transformations.',
     images: ['/og-image.png'],
     type: 'website',
   },

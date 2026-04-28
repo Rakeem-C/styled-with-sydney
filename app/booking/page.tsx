@@ -5,8 +5,8 @@ import { BookingForm } from '@/components/booking-form'
 import { ContactForm } from '@/components/contact-form'
 
 export const metadata = {
-  title: 'Book Appointment - Sidney Kiyabu',
-  description: 'Schedule your hair transformation with Sidney Kiyabu. Book a consultation for bridal styling, extensions, color, and more.',
+  title: 'Request a Consultation - Styled by Sidney',
+  description: 'Send a consultation request for bridal styling, extensions, color, makeup, event hair, and other Styled by Sidney services.',
 }
 
 export default function BookingPage() {

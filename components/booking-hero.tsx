@@ -12,11 +12,10 @@ export function BookingHero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Book Your Appointment
+            Request a Consultation
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Ready to transform your look? Schedule a consultation or reach out with any questions. 
-            I can't wait to create something beautiful with you!
+            Tell Sidney about your event, inspiration, timing, and hair goals. She can help you choose the right service path and next step.
           </p>
         </motion.div>
       </div>

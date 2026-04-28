@@ -24,9 +24,7 @@ export function AboutHero() {
               {siteContent?.bio?.description ?? ''}
             </p>
             <p className="text-gray-600 leading-relaxed">
-              Every appointment is an opportunity to create something beautiful and unique. 
-              I take pride in understanding your vision and bringing it to life with precision, 
-              creativity, and care. Your confidence is my passion.
+              {siteContent?.bio?.extendedDescription ?? ''}
             </p>
           </motion.div>
 
@@ -46,8 +44,6 @@ export function AboutHero() {
                 priority
               />
             </div>
-            {/* Decorative Element */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-rose-400 to-pink-600 rounded-full blur-3xl opacity-30 -z-10" />
           </motion.div>
         </div>
       </div>

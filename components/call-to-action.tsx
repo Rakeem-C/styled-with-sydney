@@ -24,10 +24,10 @@ export function CallToAction() {
             className="order-2 md:order-1"
           >
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Ready to Transform Your Look?
+              Ready to talk through the look?
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              Book a consultation today and let's create something beautiful together
+              Send a few details about your date, service, and inspiration. Sidney can help you understand the best next step before you commit.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -35,7 +35,7 @@ export function CallToAction() {
                 className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
                 <Calendar className="mr-2" size={20} />
-                Contact for Consultation
+                Request a consultation
                 <ArrowRight className="ml-2" size={20} />
               </Link>
             </div>

@@ -1,6 +1,8 @@
 import { Hero } from '@/components/hero'
 import { FeaturedServices } from '@/components/featured-services'
+import { OwnerPreview } from '@/components/owner-preview'
 import { PortfolioPreview } from '@/components/portfolio-preview'
+import { ClientExperience } from '@/components/client-experience'
 import { CallToAction } from '@/components/call-to-action'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
@@ -12,7 +14,9 @@ export default function HomePage() {
       <main>
         <Hero />
         <FeaturedServices />
+        <OwnerPreview />
         <PortfolioPreview />
+        <ClientExperience />
         <CallToAction />
       </main>
       <Footer />

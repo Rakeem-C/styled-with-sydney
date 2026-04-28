@@ -24,10 +24,10 @@ export function PortfolioPreview() {
           className="text-center mb-16"
         >
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Recent Work
+            Proof in the finish
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Explore stunning transformations from real clients
+            Lead with the most polished, high-impact styles here, then use Instagram to keep the newest work fresh.
           </p>
         </motion.div>
 
