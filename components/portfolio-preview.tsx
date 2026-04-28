@@ -24,10 +24,10 @@ export function PortfolioPreview() {
           className="text-center mb-16"
         >
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Proof in the finish
+            Looks made to be remembered
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Lead with the most polished, high-impact styles here, then use Instagram to keep the newest work fresh.
+            Browse polished styles, soft glam, color moments, and event-ready hair created for clients who want to feel confident from every angle.
           </p>
         </motion.div>
 

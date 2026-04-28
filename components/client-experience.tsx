@@ -29,7 +29,7 @@ export function ClientExperience() {
             A beauty experience built around trust.
           </h2>
           <p className="text-lg leading-relaxed text-gray-600">
-            Before real testimonials are added, the site should still communicate what clients can expect: clear communication, thoughtful prep, and styling that holds up for the moment they care about.
+            From your first message to the final mirror check, Sidney keeps the process clear, personal, and focused on a look that feels like you.
           </p>
         </motion.div>
 
