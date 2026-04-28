@@ -15,7 +15,7 @@ export function AboutHero() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              {siteContent?.bio?.title ?? 'About Sidney'}
+              {siteContent?.bio?.title ?? 'About Styled by Sidney'}
             </h1>
             <p className="text-2xl text-rose-600 font-semibold mb-6">
               {siteContent?.bio?.subtitle ?? 'Your Hair Transformation Expert'}

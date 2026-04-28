@@ -20,16 +20,16 @@ export const siteContent = {
   },
   
   bio: {
-    title: "About Sidney",
-    subtitle: "A calm, detail-driven stylist for big days and everyday confidence",
-    description: "Sidney brings a steady hand, a creative eye, and a client-first approach to every appointment. Her work is rooted in listening closely, understanding the look you want, and shaping a style that feels polished, wearable, and true to you.",
-    extendedDescription: "Whether the moment is a wedding morning, a photoshoot, a special event, or a long-awaited transformation, Sidney focuses on the details that make hair feel intentional: shape, softness, balance, hold, and finish. The goal is simple: you leave feeling beautiful, comfortable, and confident in front of the mirror and the camera.",
+    title: "About Styled by Sidney",
+    subtitle: "A beauty experience built around confidence, detail, and care",
+    description: "Styled by Sidney is for clients who want more than a quick appointment. The brand is built around polished hair, thoughtful communication, and looks that feel beautiful in real life and in photos.",
+    extendedDescription: "From bridal mornings and special events to color, extensions, glam, and everyday transformations, every service starts with understanding the occasion, the inspiration, and how you want to feel. The goal is a smooth experience from first inquiry to final finish, with clear next steps and a look that feels intentional.",
     expertise: [
-      "Bridal Hair Styling",
-      "Hair Extensions",
-      "Makeup Artistry",
-      "Color Specialist",
-      "Braiding & Styling"
+      "Bridal and event styling",
+      "Color transformations",
+      "Extensions and volume",
+      "Soft glam and makeup",
+      "Braids and polished finishes"
     ],
     image: "/sidney-bio.png"
   },

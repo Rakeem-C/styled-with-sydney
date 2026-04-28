@@ -5,8 +5,8 @@ import { Expertise } from '@/components/expertise'
 import { CallToAction } from '@/components/call-to-action'
 
 export const metadata = {
-  title: 'About Sidney Kiyabu - Styled by Sidney',
-  description: 'Meet Sidney Kiyabu, the stylist behind Styled by Sidney, specializing in bridal styling, event hair, color, extensions, makeup, and braiding.',
+  title: 'About Styled by Sidney',
+  description: 'Learn about the Styled by Sidney experience for bridal styling, event hair, color, extensions, makeup, braids, and polished photo-ready finishes.',
 }
 
 export default function AboutPage() {

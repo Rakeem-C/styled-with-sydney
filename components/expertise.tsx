@@ -21,10 +21,10 @@ export function Expertise() {
           className="text-center mb-16"
         >
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            What Sidney can help with
+            What Styled by Sidney offers
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Whether you know exactly what you want or need help narrowing it down, Sidney can guide the look from idea to finish.
+            A focused menu of beauty services for clients who want their hair to feel intentional, flattering, and ready for the moment.
           </p>
         </motion.div>
 
@@ -52,10 +52,10 @@ export function Expertise() {
           className="mt-20 bg-gradient-to-br from-rose-100 to-pink-100 rounded-3xl p-12 text-center"
         >
           <h3 className="font-serif text-3xl font-bold text-gray-900 mb-6">
-            A little more than pretty hair
+            A smoother path to the final look
           </h3>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Your hair should feel beautiful, comfortable, and like you. Sidney blends technical care with a creative eye so your style holds up, photographs well, and feels natural from the first look to the end of the day.
+            The experience is designed to make booking feel clear and comfortable. You share the occasion, inspiration, and hair goals, then Styled by Sidney helps shape the right service, prep, and finish so you can show up feeling confident.
           </p>
         </motion.div>
       </div>
