@@ -21,10 +21,10 @@ export function Expertise() {
           className="text-center mb-16"
         >
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Areas of Expertise
+            What Sidney can help with
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Specialized skills to create your perfect look
+            Whether you know exactly what you want or need help narrowing it down, Sidney can guide the look from idea to finish.
           </p>
         </motion.div>
 
@@ -45,7 +45,6 @@ export function Expertise() {
           )) ?? null}
         </div>
 
-        {/* Philosophy Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -53,13 +52,10 @@ export function Expertise() {
           className="mt-20 bg-gradient-to-br from-rose-100 to-pink-100 rounded-3xl p-12 text-center"
         >
           <h3 className="font-serif text-3xl font-bold text-gray-900 mb-6">
-            My Philosophy
+            A little more than pretty hair
           </h3>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Hair is more than just style—it's an expression of who you are. My approach combines 
-            technical expertise with artistic vision to create looks that not only turn heads but 
-            also make you feel authentically beautiful. Every client deserves personalized attention, 
-            quality products, and results that exceed expectations.
+            Your hair should feel beautiful, comfortable, and like you. Sidney blends technical care with a creative eye so your style holds up, photographs well, and feels natural from the first look to the end of the day.
           </p>
         </motion.div>
       </div>

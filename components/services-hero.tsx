@@ -12,11 +12,10 @@ export function ServicesHero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Professional Hair Services
+            Services for the look you want to remember
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            From bridal styling to color transformations, discover personalized services 
-            designed to bring your hair vision to life with expert care and attention to detail.
+            Choose the service that fits your moment, from soft bridal styling and event glam to color, extensions, braids, and polished everyday transformations.
           </p>
         </motion.div>
       </div>

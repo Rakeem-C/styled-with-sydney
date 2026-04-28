@@ -171,7 +171,7 @@ export function ContactForm() {
         </button>
 
         <p className="text-sm text-gray-600 text-center">
-          This will save your message and open Gmail to send directly
+          After submitting, a ready-to-send email will open so Sidney receives your details directly.
         </p>
 
         {/* Status Messages */}

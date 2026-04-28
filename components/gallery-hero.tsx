@@ -12,11 +12,10 @@ export function GalleryHero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Portfolio Gallery
+            Find your inspiration
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Browse through stunning hair transformations and see the artistry behind each unique style. 
-            Every creation tells a story of confidence and beauty.
+            Explore finished looks, color moments, bridal styles, and glam details to help you picture what Sidney can create for your own appointment.
           </p>
         </motion.div>
       </div>

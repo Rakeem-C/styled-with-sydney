@@ -45,7 +45,7 @@ export const siteContent = {
     },
     {
       title: "Clear next steps",
-      description: "Clients know what to expect before the appointment, how to prep, and how Sidney will follow up after an inquiry."
+      description: "You'll know what to expect before the appointment, how to prep, and what happens after you send an inquiry."
     }
   ],
 

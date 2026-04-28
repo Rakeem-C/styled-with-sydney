@@ -5,8 +5,8 @@ import { ServicesList } from '@/components/services-list'
 import { CallToAction } from '@/components/call-to-action'
 
 export const metadata = {
-  title: 'Services - Sidney Kiyabu Hairstylist',
-  description: 'Explore professional hair services including bridal styling, extensions, makeup artistry, color treatments, and braiding by Sidney Kiyabu.',
+  title: 'Services - Styled by Sidney',
+  description: 'Explore bridal styling, event hair, color, extensions, makeup artistry, and braiding services from Styled by Sidney.',
 }
 
 export default function ServicesPage() {
