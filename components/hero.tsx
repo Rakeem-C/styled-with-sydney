@@ -104,7 +104,7 @@ export function Hero() {
       </div>
 
       <div className="absolute bottom-5 left-1/2 z-20 hidden w-[min(92vw,980px)] -translate-x-1/2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-center text-sm font-medium text-white backdrop-blur-md sm:block">
-        Not sure what to book? Start with a consultation and Sidney will guide the right next step.
+        Not sure which service fits? Request a consultation and send your event date, hair goal, and inspiration. Sidney will point you to the right next step.
       </div>
 
       {/* Scroll Indicator */}
