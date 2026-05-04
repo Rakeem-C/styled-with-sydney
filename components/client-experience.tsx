@@ -14,7 +14,7 @@ export function ClientExperience() {
   })
 
   return (
-    <section ref={ref} className="bg-gradient-to-b from-rose-50 to-white py-20">
+    <section ref={ref} className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -22,13 +22,13 @@ export function ClientExperience() {
           transition={{ duration: 0.6 }}
           className="mx-auto mb-12 max-w-3xl text-center"
         >
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-rose-600">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-rose-700">
             Why clients book
           </p>
-          <h2 className="mb-5 font-serif text-4xl font-bold text-gray-900 md:text-5xl">
+          <h2 className="mb-5 font-serif text-4xl font-bold text-slate-950 md:text-5xl">
             A beauty experience built around trust.
           </h2>
-          <p className="text-lg leading-relaxed text-gray-600">
+          <p className="text-lg leading-relaxed text-slate-600">
             From your first message to the final mirror check, Sidney keeps the process clear, personal, and focused on a look that feels like you.
           </p>
         </motion.div>
@@ -43,15 +43,15 @@ export function ClientExperience() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
                 transition={{ duration: 0.55, delay: index * 0.1 }}
-                className="h-full rounded-2xl border border-rose-100 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                className="h-full rounded-lg border border-stone-200 bg-[#fbf6ef] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-rose-200 hover:bg-white hover:shadow-lg"
               >
-                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
+                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-rose-700 text-white">
                   <Icon size={24} />
                 </div>
-                <h3 className="mb-3 font-serif text-2xl font-bold text-gray-900">
+                <h3 className="mb-3 font-serif text-2xl font-bold text-slate-950">
                   {item.title}
                 </h3>
-                <p className="leading-relaxed text-gray-600">
+                <p className="leading-relaxed text-slate-600">
                   {item.description}
                 </p>
               </motion.div>
@@ -68,7 +68,7 @@ export function ClientExperience() {
           {siteContent?.trustSignals?.map?.((signal) => (
             <span
               key={signal}
-              className="rounded-full border border-rose-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700"
+              className="rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-slate-800"
             >
               {signal}
             </span>

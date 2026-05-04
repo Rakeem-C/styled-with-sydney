@@ -6,6 +6,7 @@ import { ClientExperience } from '@/components/client-experience'
 import { CallToAction } from '@/components/call-to-action'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
+import { StickyConsultationCta } from '@/components/sticky-consultation-cta'
 
 export default function HomePage() {
   return (
@@ -20,6 +21,7 @@ export default function HomePage() {
         <CallToAction />
       </main>
       <Footer />
+      <StickyConsultationCta />
     </div>
   )
 }

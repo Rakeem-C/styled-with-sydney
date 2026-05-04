@@ -2,7 +2,8 @@ import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { BookingHero } from '@/components/booking-hero'
 import { BookingForm } from '@/components/booking-form'
-import { ContactForm } from '@/components/contact-form'
+import { ConsultationNextSteps } from '@/components/consultation-next-steps'
+import { StickyConsultationCta } from '@/components/sticky-consultation-cta'
 
 export const metadata = {
   title: 'Request a Consultation - Styled by Sidney',
@@ -15,14 +16,15 @@ export default function BookingPage() {
       <Header />
       <main>
         <BookingHero />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 pb-28 md:pb-16">
           <div className="grid md:grid-cols-2 gap-12">
             <BookingForm />
-            <ContactForm />
+            <ConsultationNextSteps />
           </div>
         </div>
       </main>
       <Footer />
+      <StickyConsultationCta />
     </div>
   )
 }

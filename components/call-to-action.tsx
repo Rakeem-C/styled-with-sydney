@@ -13,7 +13,7 @@ export function CallToAction() {
   })
 
   return (
-    <section ref={ref} className="py-20 bg-gradient-to-br from-rose-50 to-pink-50">
+    <section ref={ref} className="bg-white py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
@@ -23,16 +23,19 @@ export function CallToAction() {
             transition={{ duration: 0.6 }}
             className="order-2 md:order-1"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Ready to talk through the look?
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-rose-700">
+              The fastest next step
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-slate-950 mb-6">
+              Tell Sidney the date. She will help with the rest.
             </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Send a few details about your date, service, and inspiration. Sidney can help you understand the best next step before you commit.
+            <p className="text-xl text-slate-600 mb-8">
+              Send the basics now: service, event date, and the look you have in mind. The form feeds the consultation workflow so Sidney can follow up by text or email.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/booking"
-                className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                className="inline-flex items-center justify-center rounded-full bg-rose-700 px-8 py-4 font-semibold text-white shadow-lg shadow-rose-950/10 transition-all duration-300 hover:-translate-y-1 hover:bg-rose-800"
               >
                 <Calendar className="mr-2" size={20} />
                 Request a consultation
@@ -48,7 +51,7 @@ export function CallToAction() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="order-1 md:order-2"
           >
-            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-lg shadow-2xl">
               <Image
                 src="/cta-hero.png"
                 alt="Sidney Kiyabu hairstyling showcase"

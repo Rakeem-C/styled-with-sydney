@@ -1,61 +1,165 @@
 'use client'
 
-import { useState } from 'react'
-import { Calendar, Clock, User, Mail, Phone, MessageSquare } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { Calendar, Clock, Mail, MessageSquare, Phone, User } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { siteContent } from '@/lib/content'
 
+type BookingFormData = {
+  name: string
+  phone: string
+  email: string
+  serviceInterest: string
+  desiredDate: string
+  desiredTime: string
+  eventType: string
+  notes: string
+}
+
+type BookingAttribution = {
+  sourcePage: string
+  referrer: string
+  utmSource: string
+  utmCampaign: string
+  utmMedium: string
+  submittedAtClient: string
+}
+
+const initialFormData: BookingFormData = {
+  name: '',
+  phone: '',
+  email: '',
+  serviceInterest: '',
+  desiredDate: '',
+  desiredTime: '',
+  eventType: '',
+  notes: '',
+}
+
+function normalizeServiceValue(value: string) {
+  return value.trim().toLowerCase()
+}
+
+function isComplexService(value: string) {
+  const normalized = normalizeServiceValue(value)
+  return [
+    'bridal hair styling',
+    'hair extensions',
+    'color specialist',
+  ].includes(normalized)
+}
+
+function resolveCtaLabel(serviceInterest: string) {
+  if (!serviceInterest) {
+    return 'Request a Consultation'
+  }
+
+  return isComplexService(serviceInterest) ? 'Request a Consultation' : 'Check Availability'
+}
+
+function getAttribution(): BookingAttribution {
+  if (typeof window === 'undefined') {
+    return {
+      sourcePage: '/booking',
+      referrer: '',
+      utmSource: '',
+      utmCampaign: '',
+      utmMedium: '',
+      submittedAtClient: '',
+    }
+  }
+
+  const params = new URLSearchParams(window.location.search)
+
+  return {
+    sourcePage: window.location.pathname,
+    referrer: document.referrer || '',
+    utmSource: params.get('utm_source') || '',
+    utmCampaign: params.get('utm_campaign') || '',
+    utmMedium: params.get('utm_medium') || '',
+    submittedAtClient: new Date().toISOString(),
+  }
+}
+
 export function BookingForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    service: '',
-    date: '',
-    time: '',
-    message: '',
-  })
+  const [formData, setFormData] = useState<BookingFormData>(initialFormData)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [statusMessage, setStatusMessage] = useState('')
+  const [validationMessage, setValidationMessage] = useState('')
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e?.preventDefault?.()
-    setIsSubmitting(true)
+  const ctaLabel = useMemo(() => resolveCtaLabel(formData.serviceInterest), [formData.serviceInterest])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const service = new URLSearchParams(window.location.search).get('service')
+    if (!service) return
+
+    setFormData((current) => ({
+      ...current,
+      serviceInterest: service,
+    }))
+  }, [])
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    setValidationMessage('')
+    setStatusMessage('')
     setSubmitStatus('idle')
+
+    if (!formData.name.trim()) {
+      setValidationMessage('Please add your name so Sidney knows who to follow up with.')
+      return
+    }
+
+    if (!formData.phone.trim() && !formData.email.trim()) {
+      setValidationMessage('Please add a phone number or email so Sidney can confirm your next step.')
+      return
+    }
+
+    setIsSubmitting(true)
 
     try {
       const response = await fetch('/api/bookings', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          attribution: getAttribution(),
+        }),
       })
 
-      if (response?.ok) {
-        setSubmitStatus('success')
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          service: '',
-          date: '',
-          time: '',
-          message: '',
-        })
-      } else {
+      const payload = await response.json().catch(() => null)
+
+      if (!response.ok) {
         setSubmitStatus('error')
+        setStatusMessage(payload?.error || 'Something went wrong while sending your request. Please try again.')
+        return
       }
+
+      setSubmitStatus('success')
+      setStatusMessage(
+        payload?.message ||
+          'Your request is in. Sidney will text or email you with the best next step based on your service and date.'
+      )
+      setFormData(initialFormData)
     } catch (error) {
-      console.error('Booking submission error:', error)
+      console.error('Styled by Sydney intake error:', error)
       setSubmitStatus('error')
+      setStatusMessage('We could not send your request right now. Please try again in a moment.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e?.target?.name ?? '']: e?.target?.value ?? ''
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData((current) => ({
+      ...current,
+      [event.target.name]: event.target.value,
     }))
   }
 
@@ -64,181 +168,209 @@ export function BookingForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-3xl p-8 shadow-lg"
+      className="rounded-lg bg-white p-8 shadow-[0_24px_80px_rgba(15,23,42,0.08)] ring-1 ring-stone-200"
     >
-      <h2 className="font-serif text-3xl font-bold text-gray-900 mb-6">
-        Schedule Appointment
-      </h2>
-      
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Name */}
+      <div className="mb-8">
+        <p className="text-sm font-semibold uppercase tracking-[0.24em] text-rose-700">
+          Consultation request
+        </p>
+        <h2 className="mt-3 font-serif text-3xl font-bold text-slate-900">
+          Tell Sidney what you&apos;re looking for
+        </h2>
+        <p className="mt-3 text-base leading-7 text-slate-600">
+          Keep this simple. Start with your name and the best way to reach you, then add as much or as little
+          detail as you have right now.
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label htmlFor="booking-name" className="block text-sm font-semibold text-gray-700 mb-2">
+          <label htmlFor="booking-name" className="mb-2 block text-sm font-semibold text-slate-700">
             Full Name *
           </label>
           <div className="relative">
-            <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
             <input
-              type="text"
               id="booking-name"
               name="name"
-              value={formData?.name ?? ''}
+              type="text"
+              value={formData.name}
               onChange={handleChange}
               required
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all bg-white"
+              className="w-full rounded-lg border border-stone-200 bg-[#fbf6ef] py-3 pl-12 pr-4 text-slate-900 outline-none transition focus:border-rose-500 focus:bg-white focus:ring-2 focus:ring-rose-100"
               placeholder="Enter your name"
             />
           </div>
         </div>
 
-        {/* Email */}
-        <div>
-          <label htmlFor="booking-email" className="block text-sm font-semibold text-gray-700 mb-2">
-            Email Address *
-          </label>
-          <div className="relative">
-            <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <input
-              type="email"
-              id="booking-email"
-              name="email"
-              value={formData?.email ?? ''}
-              onChange={handleChange}
-              required
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all bg-white"
-              placeholder="your@email.com"
-            />
+        <div className="grid gap-5 md:grid-cols-2">
+          <div>
+            <label htmlFor="booking-phone" className="mb-2 block text-sm font-semibold text-slate-700">
+              Phone Number
+            </label>
+            <div className="relative">
+              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <input
+                id="booking-phone"
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-stone-200 bg-[#fbf6ef] py-3 pl-12 pr-4 text-slate-900 outline-none transition focus:border-rose-500 focus:bg-white focus:ring-2 focus:ring-rose-100"
+                placeholder="(555) 123-4567"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="booking-email" className="mb-2 block text-sm font-semibold text-slate-700">
+              Email Address
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <input
+                id="booking-email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-stone-200 bg-[#fbf6ef] py-3 pl-12 pr-4 text-slate-900 outline-none transition focus:border-rose-500 focus:bg-white focus:ring-2 focus:ring-rose-100"
+                placeholder="your@email.com"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Phone */}
         <div>
-          <label htmlFor="booking-phone" className="block text-sm font-semibold text-gray-700 mb-2">
-            Phone Number *
-          </label>
-          <div className="relative">
-            <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <input
-              type="tel"
-              id="booking-phone"
-              name="phone"
-              value={formData?.phone ?? ''}
-              onChange={handleChange}
-              required
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all bg-white"
-              placeholder="(555) 123-4567"
-            />
-          </div>
-        </div>
-
-        {/* Service */}
-        <div>
-          <label htmlFor="booking-service" className="block text-sm font-semibold text-gray-700 mb-2">
-            Service *
+          <label htmlFor="booking-serviceInterest" className="mb-2 block text-sm font-semibold text-slate-700">
+            Service Interest
           </label>
           <select
-            id="booking-service"
-            name="service"
-            value={formData?.service ?? ''}
+            id="booking-serviceInterest"
+            name="serviceInterest"
+            value={formData.serviceInterest}
             onChange={handleChange}
-            required
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all bg-white"
+            className="w-full rounded-lg border border-stone-200 bg-[#fbf6ef] px-4 py-3 text-slate-900 outline-none transition focus:border-rose-500 focus:bg-white focus:ring-2 focus:ring-rose-100"
           >
-            <option value="">Select a service</option>
-            {siteContent?.services?.map?.((service) => (
-              <option key={service?.id ?? ''} value={service?.title ?? ''}>
-                {service?.title ?? ''}
+            <option value="">I&apos;m not sure yet</option>
+            {siteContent.services.map((service) => (
+              <option key={service.id} value={service.title}>
+                {service.title}
               </option>
-            )) ?? null}
+            ))}
+            <option value="Bridal party / wedding package">Bridal party / wedding package</option>
+            <option value="On-location styling">On-location styling</option>
+            <option value="Another service">Another service</option>
           </select>
         </div>
 
-        {/* Date */}
-        <div>
-          <label htmlFor="booking-date" className="block text-sm font-semibold text-gray-700 mb-2">
-            Preferred Date *
-          </label>
-          <div className="relative">
-            <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <input
-              type="date"
-              id="booking-date"
-              name="date"
-              value={formData?.date ?? ''}
-              onChange={handleChange}
-              required
-              min={new Date().toISOString().split('T')[0]}
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all bg-white"
-            />
+        <div className="grid gap-5 md:grid-cols-2">
+          <div>
+            <label htmlFor="booking-desiredDate" className="mb-2 block text-sm font-semibold text-slate-700">
+              Desired Date
+            </label>
+            <div className="relative">
+              <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <input
+                id="booking-desiredDate"
+                name="desiredDate"
+                type="date"
+                value={formData.desiredDate}
+                onChange={handleChange}
+                min={new Date().toISOString().split('T')[0]}
+                className="w-full rounded-lg border border-stone-200 bg-[#fbf6ef] py-3 pl-12 pr-4 text-slate-900 outline-none transition focus:border-rose-500 focus:bg-white focus:ring-2 focus:ring-rose-100"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="booking-desiredTime" className="mb-2 block text-sm font-semibold text-slate-700">
+              Desired Time
+            </label>
+            <div className="relative">
+              <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <input
+                id="booking-desiredTime"
+                name="desiredTime"
+                type="time"
+                value={formData.desiredTime}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-stone-200 bg-[#fbf6ef] py-3 pl-12 pr-4 text-slate-900 outline-none transition focus:border-rose-500 focus:bg-white focus:ring-2 focus:ring-rose-100"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Time */}
         <div>
-          <label htmlFor="booking-time" className="block text-sm font-semibold text-gray-700 mb-2">
-            Preferred Time *
+          <label htmlFor="booking-eventType" className="mb-2 block text-sm font-semibold text-slate-700">
+            Event Type
           </label>
-          <div className="relative">
-            <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <input
-              type="time"
-              id="booking-time"
-              name="time"
-              value={formData?.time ?? ''}
-              onChange={handleChange}
-              required
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all bg-white"
-            />
-          </div>
+          <input
+            id="booking-eventType"
+            name="eventType"
+            type="text"
+            value={formData.eventType}
+            onChange={handleChange}
+            className="w-full rounded-lg border border-stone-200 bg-[#fbf6ef] px-4 py-3 text-slate-900 outline-none transition focus:border-rose-500 focus:bg-white focus:ring-2 focus:ring-rose-100"
+            placeholder="Wedding, photoshoot, birthday, everyday glam, or another event"
+          />
         </div>
 
-        {/* Message */}
         <div>
-          <label htmlFor="booking-message" className="block text-sm font-semibold text-gray-700 mb-2">
-            Additional Notes
+          <label htmlFor="booking-notes" className="mb-2 block text-sm font-semibold text-slate-700">
+            Notes or Inspiration
           </label>
           <div className="relative">
-            <MessageSquare className="absolute left-4 top-4 text-gray-400" size={20} />
+            <MessageSquare className="absolute left-4 top-4 text-slate-400" size={20} />
             <textarea
-              id="booking-message"
-              name="message"
-              value={formData?.message ?? ''}
+              id="booking-notes"
+              name="notes"
+              rows={5}
+              value={formData.notes}
               onChange={handleChange}
-              rows={4}
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all resize-none bg-white"
-              placeholder="Any special requests or questions?"
+              className="w-full rounded-lg border border-stone-200 bg-[#fbf6ef] py-3 pl-12 pr-4 text-slate-900 outline-none transition focus:border-rose-500 focus:bg-white focus:ring-2 focus:ring-rose-100"
+              placeholder="Tell Sidney what kind of look you want, any inspiration, hair history, or questions you already have."
             />
           </div>
+          <p className="mt-2 text-sm text-slate-500">
+            Inspiration photo upload is the next site upgrade. For now, send your request and Sidney can ask for
+            photos by text if they would help.
+          </p>
         </div>
 
-        {/* Submit Button */}
+        {validationMessage ? (
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+            {validationMessage}
+          </div>
+        ) : null}
+
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-xl hover:from-rose-600 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full rounded-full bg-rose-700 px-6 py-4 text-base font-semibold text-white transition hover:bg-rose-800 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {isSubmitting ? 'Submitting...' : 'Book Appointment'}
+          {isSubmitting ? 'Sending your request...' : ctaLabel}
         </button>
 
-        {/* Status Messages */}
-        {submitStatus === 'success' && (
+        {submitStatus === 'success' ? (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-green-100 border-2 border-green-500 rounded-xl text-green-700 text-center font-semibold"
+            className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-4 text-sm font-medium text-emerald-800"
           >
-            🎉 Booking request submitted successfully! I'll contact you soon.
+            {statusMessage}
           </motion.div>
-        )}
-        {submitStatus === 'error' && (
+        ) : null}
+
+        {submitStatus === 'error' ? (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-red-100 border-2 border-red-500 rounded-xl text-red-700 text-center font-semibold"
+            className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-4 text-sm font-medium text-rose-700"
           >
-            ❌ Something went wrong. Please try again or contact directly.
+            {statusMessage}
           </motion.div>
-        )}
+        ) : null}
       </form>
     </motion.div>
   )

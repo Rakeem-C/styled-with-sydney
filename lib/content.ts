@@ -7,15 +7,16 @@ export const siteContent = {
   instagramUrl: "https://www.instagram.com/styledbysidneyx/",
   personalInstagramUrl: "https://www.instagram.com/sidneyanelax/",
   hero: {
-    eyebrow: "Bridal hair, color, styling, and glam",
+    eyebrow: "Bridal, event, color, and camera-ready styling",
     headline: "Styled by Sidney",
-    description: "A polished, personal hair experience for clients who want to feel taken care of from the first message to the final look.",
+    description: "Tell Sidney your date, service, and inspiration. She will help you choose the right next step before you commit.",
     primaryCta: "Request a consultation",
     secondaryCta: "View recent work",
     proofPoints: [
-      "Bridal and event styling",
-      "Color, extensions, and glam",
-      "Detail-led, photo-ready finishes"
+      "Consultation first",
+      "Bridal and event ready",
+      "Photo-ready finishing",
+      "Text or email follow-up"
     ]
   },
   
@@ -31,7 +32,7 @@ export const siteContent = {
       "Soft glam and makeup",
       "Braids and polished finishes"
     ],
-    image: "/about-styled-by-sidney.png"
+    image: "/portfolio/image-8.png"
   },
 
   clientExperience: [
@@ -51,10 +52,11 @@ export const siteContent = {
 
   trustSignals: [
     "Bridal styling",
+    "Event hair",
     "Color transformations",
     "Extensions",
     "Makeup artistry",
-    "Braids and event looks"
+    "Braids and polished finishes"
   ],
   
   services: [
@@ -125,99 +127,99 @@ export const siteContent = {
       id: 1,
       url: "/portfolio/image-1.png",
       category: "bridal",
-      title: "Elegant Bridal Updo",
-      description: "Romantic bridal styling"
+      title: "Bridal Bouquet Moment",
+      description: "Soft bridal elegance with photo-ready finish"
     },
     {
       id: 2,
-      url: "/portfolio/image-2.png",
-      category: "color",
-      title: "Blonde Balayage",
-      description: "Dimensional color transformation"
+      url: "/portfolio/image-8.png",
+      category: "makeup",
+      title: "Polished Glam Close-Up",
+      description: "A clean, elevated portrait finish"
     },
     {
       id: 3,
-      url: "/portfolio/image-3.png",
-      category: "bridal",
-      title: "Classic Bridal Waves",
-      description: "Timeless wedding hair"
+      url: "/portfolio/image-5.png",
+      category: "color",
+      title: "Transformation Moment",
+      description: "Before-and-after impact that shows the change"
     },
     {
       id: 4,
-      url: "/portfolio/image-4.png",
-      category: "styling",
-      title: "Sleek & Sophisticated",
-      description: "Polished styling"
+      url: "/portfolio/image-11.png",
+      category: "bridal",
+      title: "Braided Texture Detail",
+      description: "Protective styling with a refined finish"
     },
     {
       id: 5,
-      url: "/portfolio/image-5.png",
-      category: "makeup",
-      title: "Hair & Makeup Glam",
-      description: "Complete transformation"
+      url: "/portfolio/image-3.png",
+      category: "color",
+      title: "Soft Blonde Length",
+      description: "Dimensional blonde with movement and shine"
     },
     {
       id: 6,
       url: "/portfolio/image-6.png",
       category: "styling",
-      title: "Voluminous Curls",
-      description: "Bouncy, beautiful styling"
+      title: "Voluminous Curl Finish",
+      description: "Bouncy texture with full, soft shape"
     },
     {
       id: 7,
-      url: "/portfolio/image-7.png",
-      category: "color",
-      title: "Rich Brunette",
-      description: "Deep color enhancement"
+      url: "/portfolio/image-14.png",
+      category: "styling",
+      title: "Sleek Signature Finish",
+      description: "Smooth styling with a refined silhouette"
     },
     {
       id: 8,
-      url: "/portfolio/image-8.png",
-      category: "bridal",
-      title: "Romantic Half-Up Style",
-      description: "Soft bridal elegance"
+      url: "/portfolio/image-4.png",
+      category: "color",
+      title: "Blended Blonde Dimension",
+      description: "Soft transition with bright, healthy-looking ends"
     },
     {
       id: 9,
-      url: "/portfolio/image-9.png",
-      category: "styling",
-      title: "Textured Waves",
-      description: "Effortless beauty"
+      url: "/portfolio/image-7.png",
+      category: "color",
+      title: "Rich Brunette Depth",
+      description: "Glossy brunette color with dimension"
     },
     {
       id: 10,
-      url: "/portfolio/image-10.png",
-      category: "styling",
-      title: "Glamorous Styling",
-      description: "Red carpet ready"
+      url: "/portfolio/image-12.png",
+      category: "color",
+      title: "Sunlit Blonde Waves",
+      description: "Bright, soft, and lifted for everyday wear"
     },
     {
       id: 11,
-      url: "/portfolio/image-11.png",
-      category: "bridal",
-      title: "Boho Bridal Braid",
-      description: "Whimsical wedding style"
+      url: "/portfolio/image-9.png",
+      category: "styling",
+      title: "Textured Wave Finish",
+      description: "Relaxed movement with a polished shape"
     },
     {
       id: 12,
-      url: "/portfolio/image-12.png",
-      category: "color",
-      title: "Sun-Kissed Highlights",
-      description: "Natural-looking dimension"
+      url: "/portfolio/image-10.png",
+      category: "makeup",
+      title: "Editorial Night Glam",
+      description: "High-impact styling for bold, photographed moments"
     },
     {
       id: 13,
       url: "/portfolio/image-13.png",
       category: "styling",
-      title: "Sleek Ponytail",
-      description: "Chic and modern"
+      title: "Sleek Ponytail Detail",
+      description: "Clean, modern styling with a soft finish"
     },
     {
       id: 14,
-      url: "/portfolio/image-14.png",
-      category: "bridal",
-      title: "Intricate Bridal Updo",
-      description: "Detailed artistry"
+      url: "/portfolio/image-2.png",
+      category: "color",
+      title: "Dimensional Blonde Blend",
+      description: "Natural contrast with a bright, blended result"
     }
   ]
 };
