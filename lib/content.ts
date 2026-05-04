@@ -32,7 +32,7 @@ export const siteContent = {
       "Soft glam and makeup",
       "Braids and polished finishes"
     ],
-    image: "/about-styled-by-sydney.png"
+    image: "/about-styled-by-sidney.png"
   },
 
   clientExperience: [

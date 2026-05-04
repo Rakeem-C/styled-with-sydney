@@ -24,7 +24,7 @@ export function OwnerPreview() {
         >
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl">
             <Image
-              src={siteContent?.bio?.image ?? '/sidney-bio.png'}
+              src={siteContent?.bio?.image ?? '/about-styled-by-sidney.png'}
               alt={`${siteContent?.ownerName ?? 'Sidney'} portrait`}
               fill
               className="object-cover"
