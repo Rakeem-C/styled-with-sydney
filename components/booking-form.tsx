@@ -9,6 +9,7 @@ type BookingFormData = {
   name: string
   phone: string
   email: string
+  preferredContactMethod: string
   serviceInterest: string
   desiredDate: string
   desiredTime: string
@@ -29,6 +30,7 @@ const initialFormData: BookingFormData = {
   name: '',
   phone: '',
   email: '',
+  preferredContactMethod: 'text',
   serviceInterest: '',
   desiredDate: '',
   desiredTime: '',
@@ -125,10 +127,10 @@ export function BookingForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          attribution: getAttribution(),
-        }),
+      body: JSON.stringify({
+        ...formData,
+        attribution: getAttribution(),
+      }),
       })
 
       const payload = await response.json().catch(() => null)
@@ -239,6 +241,23 @@ export function BookingForm() {
               />
             </div>
           </div>
+        </div>
+
+        <div>
+          <label htmlFor="booking-preferredContactMethod" className="mb-2 block text-sm font-semibold text-slate-700">
+            Preferred Contact Method
+          </label>
+          <select
+            id="booking-preferredContactMethod"
+            name="preferredContactMethod"
+            value={formData.preferredContactMethod}
+            onChange={handleChange}
+            className="w-full rounded-lg border border-stone-200 bg-[#fbf6ef] px-4 py-3 text-slate-900 outline-none transition focus:border-rose-500 focus:bg-white focus:ring-2 focus:ring-rose-100"
+          >
+            <option value="text">Text</option>
+            <option value="email">Email</option>
+            <option value="phone">Phone call</option>
+          </select>
         </div>
 
         <div>

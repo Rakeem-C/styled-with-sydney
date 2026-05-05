@@ -1,64 +1,77 @@
 'use client'
 
 import { useState } from 'react'
-import { User, Mail, MessageSquare, Send, ExternalLink } from 'lucide-react'
+import { Mail, MessageSquare, Phone, Send, User } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { siteContent } from '@/lib/content'
+
+type ContactFormData = {
+  name: string
+  email: string
+  phone: string
+  preferredContactMethod: string
+  subject: string
+  message: string
+}
+
+const initialFormData: ContactFormData = {
+  name: '',
+  email: '',
+  phone: '',
+  preferredContactMethod: 'text',
+  subject: '',
+  message: '',
+}
 
 export function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  })
+  const [formData, setFormData] = useState<ContactFormData>(initialFormData)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [statusMessage, setStatusMessage] = useState('')
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e?.preventDefault?.()
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus('idle')
+    setStatusMessage('')
 
     try {
-      // Save to database
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          attribution: {
+            sourcePage: typeof window === 'undefined' ? '/contact' : window.location.pathname,
+            referrer: typeof document === 'undefined' ? '' : document.referrer || '',
+            submittedAtClient: new Date().toISOString(),
+          },
+        }),
       })
 
-      if (response?.ok) {
-        setSubmitStatus('success')
-        
-        // Open Gmail compose in new tab
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(siteContent?.email ?? '')}&su=${encodeURIComponent(`${formData?.subject ?? 'Inquiry from website'} - From: ${formData?.name ?? ''}`)}&body=${encodeURIComponent(
-          `Name: ${formData?.name ?? ''}\nEmail: ${formData?.email ?? ''}\n\nMessage:\n${formData?.message ?? ''}`
-        )}`
-        
-        window?.open?.(gmailUrl, '_blank')
-        
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: '',
-        })
-      } else {
+      const payload = await response.json().catch(() => null)
+
+      if (!response.ok) {
         setSubmitStatus('error')
+        setStatusMessage(payload?.error || 'Something went wrong. Please try again.')
+        return
       }
+
+      setSubmitStatus('success')
+      setStatusMessage(payload?.message || 'Your message is in. Sidney will follow up soon.')
+      setFormData(initialFormData)
     } catch (error) {
       console.error('Contact submission error:', error)
       setSubmitStatus('error')
+      setStatusMessage('We could not send your message right now. Please try again in a moment.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e?.target?.name ?? '']: e?.target?.value ?? ''
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData((current) => ({
+      ...current,
+      [event.target.name]: event.target.value,
     }))
   }
 
@@ -67,75 +80,106 @@ export function ContactForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
-      className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 shadow-lg"
+      className="rounded-3xl bg-gradient-to-br from-pink-50 to-rose-50 p-8 shadow-lg"
     >
-      <h2 className="font-serif text-3xl font-bold text-gray-900 mb-6">
-        Contact for Consultation
-      </h2>
-      
+      <h2 className="mb-6 font-serif text-3xl font-bold text-gray-900">Contact for Consultation</h2>
+
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Name */}
         <div>
-          <label htmlFor="contact-name" className="block text-sm font-semibold text-gray-700 mb-2">
+          <label htmlFor="contact-name" className="mb-2 block text-sm font-semibold text-gray-700">
             Your Name *
           </label>
           <div className="relative">
-            <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
             <input
-              type="text"
               id="contact-name"
               name="name"
-              value={formData?.name ?? ''}
+              type="text"
+              value={formData.name}
               onChange={handleChange}
               required
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all bg-white"
+              className="w-full rounded-xl border-2 border-gray-200 bg-white py-3 pl-12 pr-4 outline-none transition-all focus:border-rose-500 focus:ring-2 focus:ring-rose-200"
               placeholder="Enter your name"
             />
           </div>
         </div>
 
-        {/* Email */}
-        <div>
-          <label htmlFor="contact-email" className="block text-sm font-semibold text-gray-700 mb-2">
-            Email Address *
-          </label>
-          <div className="relative">
-            <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <input
-              type="email"
-              id="contact-email"
-              name="email"
-              value={formData?.email ?? ''}
-              onChange={handleChange}
-              required
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all bg-white"
-              placeholder="your@email.com"
-            />
+        <div className="grid gap-5 md:grid-cols-2">
+          <div>
+            <label htmlFor="contact-email" className="mb-2 block text-sm font-semibold text-gray-700">
+              Email Address *
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full rounded-xl border-2 border-gray-200 bg-white py-3 pl-12 pr-4 outline-none transition-all focus:border-rose-500 focus:ring-2 focus:ring-rose-200"
+                placeholder="your@email.com"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="contact-phone" className="mb-2 block text-sm font-semibold text-gray-700">
+              Phone Number
+            </label>
+            <div className="relative">
+              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                id="contact-phone"
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full rounded-xl border-2 border-gray-200 bg-white py-3 pl-12 pr-4 outline-none transition-all focus:border-rose-500 focus:ring-2 focus:ring-rose-200"
+                placeholder="(555) 123-4567"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Subject */}
         <div>
-          <label htmlFor="contact-subject" className="block text-sm font-semibold text-gray-700 mb-2">
+          <label htmlFor="contact-preferredContactMethod" className="mb-2 block text-sm font-semibold text-gray-700">
+            Preferred Contact Method
+          </label>
+          <select
+            id="contact-preferredContactMethod"
+            name="preferredContactMethod"
+            value={formData.preferredContactMethod}
+            onChange={handleChange}
+            className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 outline-none transition-all focus:border-rose-500 focus:ring-2 focus:ring-rose-200"
+          >
+            <option value="text">Text</option>
+            <option value="email">Email</option>
+            <option value="phone">Phone call</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="contact-subject" className="mb-2 block text-sm font-semibold text-gray-700">
             Subject
           </label>
           <div className="relative">
-            <Send className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <Send className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
             <input
-              type="text"
               id="contact-subject"
               name="subject"
-              value={formData?.subject ?? ''}
+              type="text"
+              value={formData.subject}
               onChange={handleChange}
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all bg-white"
+              className="w-full rounded-xl border-2 border-gray-200 bg-white py-3 pl-12 pr-4 outline-none transition-all focus:border-rose-500 focus:ring-2 focus:ring-rose-200"
               placeholder="What's this about?"
             />
           </div>
         </div>
 
-        {/* Message */}
         <div>
-          <label htmlFor="contact-message" className="block text-sm font-semibold text-gray-700 mb-2">
+          <label htmlFor="contact-message" className="mb-2 block text-sm font-semibold text-gray-700">
             Message *
           </label>
           <div className="relative">
@@ -143,56 +187,47 @@ export function ContactForm() {
             <textarea
               id="contact-message"
               name="message"
-              value={formData?.message ?? ''}
+              value={formData.message}
               onChange={handleChange}
               required
               rows={6}
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none transition-all resize-none bg-white"
+              className="w-full resize-none rounded-xl border-2 border-gray-200 bg-white py-3 pl-12 pr-4 outline-none transition-all focus:border-rose-500 focus:ring-2 focus:ring-rose-200"
               placeholder="Tell me about your hair goals..."
             />
           </div>
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-xl hover:from-rose-600 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+          className="flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:from-rose-600 hover:to-pink-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {isSubmitting ? (
-            'Sending...'
-          ) : (
-            <>
-              <Send className="mr-2" size={20} />
-              Send Message
-              <ExternalLink className="ml-2" size={16} />
-            </>
-          )}
+          {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>
 
-        <p className="text-sm text-gray-600 text-center">
-          After submitting, a ready-to-send email will open so Sidney receives your details directly.
+        <p className="text-center text-sm text-gray-600">
+          After submitting, Sidney will receive your request inside Automation Nation and follow up from there.
         </p>
 
-        {/* Status Messages */}
-        {submitStatus === 'success' && (
+        {submitStatus === 'success' ? (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-green-100 border-2 border-green-500 rounded-xl text-green-700 text-center font-semibold"
+            className="rounded-xl border-2 border-green-500 bg-green-100 p-4 text-center font-semibold text-green-700"
           >
-            ✅ Message saved! Gmail should open in a new tab.
+            {statusMessage}
           </motion.div>
-        )}
-        {submitStatus === 'error' && (
+        ) : null}
+
+        {submitStatus === 'error' ? (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-red-100 border-2 border-red-500 rounded-xl text-red-700 text-center font-semibold"
+            className="rounded-xl border-2 border-red-500 bg-red-100 p-4 text-center font-semibold text-red-700"
           >
-            ❌ Something went wrong. Please try again.
+            {statusMessage}
           </motion.div>
-        )}
+        ) : null}
       </form>
     </motion.div>
   )

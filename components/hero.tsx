@@ -103,7 +103,7 @@ export function Hero() {
         </motion.div>
       </div>
 
-      <div className="absolute bottom-5 left-1/2 z-20 hidden w-[min(92vw,980px)] -translate-x-1/2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-center text-sm font-medium text-white backdrop-blur-md sm:block">
+      <div className="absolute bottom-6 left-1/2 z-20 hidden w-[min(92vw,980px)] -translate-x-1/2 rounded-full border border-white/15 bg-slate-950/60 px-5 py-3 text-center text-sm font-medium text-rose-50 shadow-[0_12px_40px_rgba(15,23,42,0.28)] backdrop-blur-xl sm:block">
         Not sure which service fits? Request a consultation and send your event date, hair goal, and inspiration. Sidney will point you to the right next step.
       </div>
 
